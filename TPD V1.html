@@ -74,28 +74,6 @@ Time remaining:<br/>
 </div>
 <!--instructions-->
 <div class="rows container-fluid instructions" style="background:#eef7fa;border-radius:10px;padding:10px;">
-<b>Pentunjuk</b>
-<p id="marking" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">Marking scheme <span class="caret"></span></strong>
-<ul id="marklist">
-<li>Tiap Pertanyaan Bernilai 1</li>
-<li>Pertanyaan yang tidak dicoba atau tidak dikirim mendapatkan nilai 0</li>
-</ul>
-</p>
-<p id="general" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">General Instructions <span class="caret"></span></strong>
-<ul id="generallist">
-<li>Anda memiliki satu jam untuk menjawab semua pertanyaan</li>
-<li>Klik kirim untuk mengirimkan jawaban Anda dan batalkan untuk mengambil kembali kiriman Anda. Pertanyaan yang tidak diajukan tidak akan dipertimbangkan.</li>
-<li>Klik tandai untuk menandai pertanyaan dan hapus tanda untuk menghapusnya.</li>
-</ul>
-</p>
-<p id="gridinstruction" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">In the question grid <span class="caret"></span></strong>
-<ul id="gridlist">
-<li>Nomor pertanyaan saat ini adalah <kbd>digarisbawahi</kbd></li>
-<li>Pertanyaan yang dikunjungi muncul dalam warna <kbd>abu-abu</kbd></li>
-<li>Pertanyaan yang ditandai tampak <kbd>merah muda</kbd></li>
-<li>Pertanyaan yang dikirimkan muncul <kbd>hijau</kbd></li>
-<li>Pertanyaan yang dikirimkan dan yang ditandai akan muncul <kbd>biru</kbd></li>
-</ul>
 </div>
 
 
@@ -120,6 +98,48 @@ $(document).ready(function(){
 </div>
 <!--Questionare-->
 <div class="col-sm-6" id="questions">
+
+
+<table class="table table-bordered table-responsive">
+<tr>
+<td id="1" onclick="valfunc(1);">1</td>
+<td id="2" onclick="valfunc(2);">2</td>
+<td id="3" onclick="valfunc(3);">3</td>
+<td id="4" onclick="valfunc(4);">4</td>
+<td id="5" onclick="valfunc(5);">5</td>
+<td id="6" onclick="valfunc(6);">6</td>
+<td id="7" onclick="valfunc(7);">7</td>
+<td id="8" onclick="valfunc(8);">8</td>
+<td id="9" onclick="valfunc(9);">9</td>
+<td id="10" onclick="valfunc(10);">10</td>
+<td id="11" onclick="valfunc(11);">11</td>
+<td id="12" onclick="valfunc(12);">12</td>
+<td id="13" onclick="valfunc(13);">13</td>
+<td id="14" onclick="valfunc(14);">14</td>
+<td id="15" onclick="valfunc(15);">15</td>
+</tr>
+<tr>
+<td id="16" onclick="valfunc(16);">16</td>
+<td id="17" onclick="valfunc(17);">17</td>
+<td id="18" onclick="valfunc(18);">18</td>
+<td id="19" onclick="valfunc(19);">19</td>
+<td id="20" onclick="valfunc(20);">20</td>
+<td id="21" onclick="valfunc(21);">21</td>
+<td id="22" onclick="valfunc(22);">22</td>
+<td id="23" onclick="valfunc(23);">23</td>
+<td id="24" onclick="valfunc(24);">24</td>
+<td id="25" onclick="valfunc(25);">25</td>
+<td id="26" onclick="valfunc(26);">26</td>
+<td id="27" onclick="valfunc(27);">27</td>
+<td id="28" onclick="valfunc(28);">28</td>
+<td id="29" onclick="valfunc(29);">29</td>
+<td id="30" onclick="valfunc(30);">30</td>
+</tr>
+</table>
+<br>
+<br>
+
+
 <div class="rows container-fluid" id="questionrow">
 <p class="question">Nomor_.Question
 <form class="form-horizontal">
@@ -139,94 +159,36 @@ $(document).ready(function(){
 
 
 <!--pagers-->
-<div class="rows container-fluid pgrs">
-<ul class="pager" style="font-size:70%;">
-<li class="previous" id="prev"><a onclick="(counter>1)?valfunc(--counter):valfunc(counter);">Previous</a></li>
-<li class="next" id="next"><a onclick="(counter<=50)?valfunc(++counter):valfunc(counter);">Next</a></li>
-
-</ul>
-</div>
+<button class="previous" id="prev"><a onclick="(counter>1)?valfunc(--counter):valfunc(counter);">Back</a></button>
+<button class="next" id="next"><a onclick="(counter<=50)?valfunc(++counter):valfunc(counter);">Next</a></button>
 <!--Option buttons-->
 <div class="rows container-fluid buttons" style="margin-bottom:0;">
-<div class="col-sm-3">
-<center>
-<button id="mark" type="button" class="btn btn-info" onclick="markpurple();">
-Mark
+
+
+<button id="submit" type="button" class="btn btn-success" onclick="submitgreen();">Submit
 </button>
-</center>
-</div>
-<div class="col-sm-3">
-<center>
-<button id="unmark" type="button" class="btn btn-info" onclick="unmark();">
-Unmark
-</button>
-</center>
-</div>
-<div class="col-sm-3">
-<center>
+
+
 <button id="undo" type="button" class="btn btn-warning" onclick="undo();">
 Undo
 </button>
-</center>
-</div>
 
-<div class="col-sm-3">
-<center><button id="submit" type="button" class="btn btn-success" onclick="submitgreen();">Submit</button></center>
-</div>
+
+<button id="mark" type="button" class="btn btn-info" onclick="markpurple();">
+Mark
+</button>
+
+<button id="unmark" type="button" class="btn btn-info" onclick="unmark();">
+Unmark
+</button>
+
 
 
 </div>
 </div>
 <!--Question grid-->
 <div class="col-sm-3 question-grid" style="margin-bottom:0;">
-<table class="table table-bordered table-responsive">
-<tr>
-<td id="1" onclick="valfunc(1);">1</td>
-<td id="2" onclick="valfunc(2);">2</td>
-<td id="3" onclick="valfunc(3);">3</td>
-<td id="4" onclick="valfunc(4);">4</td>
-<td id="5" onclick="valfunc(5);">5</td>
-</tr>
-<tr>
-<td id="6" onclick="valfunc(6);">6</td>
-<td id="7" onclick="valfunc(7);">7</td>
-<td id="8" onclick="valfunc(8);">8</td>
-<td id="9" onclick="valfunc(9);">9</td>
-<td id="10" onclick="valfunc(10);">10</td>
-</tr>
-<tr>
-<td id="11" onclick="valfunc(11);">11</td>
-<td id="12" onclick="valfunc(12);">12</td>
-<td id="13" onclick="valfunc(13);">13</td>
-<td id="14" onclick="valfunc(14);">14</td>
-<td id="15" onclick="valfunc(15);">15</td>
-</tr>
-<tr>
-<td id="16" onclick="valfunc(16);">16</td>
-<td id="17" onclick="valfunc(17);">17</td>
-<td id="18" onclick="valfunc(18);">18</td>
-<td id="19" onclick="valfunc(19);">19</td>
-<td id="20" onclick="valfunc(20);">20</td>
-</tr>
-<tr>
-<td id="21" onclick="valfunc(21);">21</td>
-<td id="22" onclick="valfunc(22);">22</td>
-<td id="23" onclick="valfunc(23);">23</td>
-<td id="24" onclick="valfunc(24);">24</td>
-<td id="25" onclick="valfunc(25);">25</td>
-</tr>
-<tr>
-<td id="26" onclick="valfunc(26);">26</td>
-<td id="27" onclick="valfunc(27);">27</td>
-<td id="28" onclick="valfunc(28);">28</td>
-<td id="29" onclick="valfunc(29);">29</td>
-<td id="30" onclick="valfunc(30);">30</td>
-</tr>
 
-
-
-
-</table>
 
 </div>
 </div>
