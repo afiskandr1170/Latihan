@@ -1,0 +1,768 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+
+<head>
+<title></title>
+
+<style>
+	div, .container-fluid
+	{	border:0px solid black;}
+	.question-grid
+	{	padding-top:15px;}
+	#timer
+	{	font-family: 'Orbitron', sans-serif;	font-weight:900;	font-size:150%;}
+	button
+	{	margin:3px;}
+	#questions
+	{	padding:3%;	padding-top:0.5%;	font-weight:900;	font-size:150%;	vertical-align:middle;}
+	#questionrow
+	{	min-height:300px;}
+	.rows
+	{	margin:15px 0;}
+	td, th
+	{	cursor:pointer;	text-align:center;}
+	td:hover
+	{	background:black;	color:white;}
+	td:onclick
+	{	color:white;}
+	a
+	{	cursor:pointer;
+	}
+	button{	width:100px;}
+</style>
+
+
+
+</head>
+
+
+<body onload="valfunc(1);">
+
+<div class="rows upper-bar">
+<div style="background:lightblue;transform:skewX(20deg);min-height:60px;margin-left:10px;margin-right:10px;border-left:20px double white;border-right:20px double white;">
+<div style="transform:skewX(-20deg);">
+<!--upper bar with logo and menus-->
+<div class="container-fluid">
+<!--space for logo-->
+<div class="col-sm-3 logo">
+ 		<img src="logo1.png" alt="Exam - Belajar Yuk" style="max-width: 50%;height: auto;">
+</div>
+<!--menu bar-->
+<div class="col-sm-9 menu-upper">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!--Content-->
+<div class="rows content container-fluid" style="margin-bottom:0;padding:0;">
+<!--left column containing instructions and timer-->
+<div class="col-sm-3">
+<!--timer-->
+<div class="rows container-fluid" id="timer">
+Time remaining:<br/>
+<div class="progress" style="margin-top:3%;">
+<div class="progress-bar progress-bar-striped" id="#bar" style="width:100%;">
+1 : 00 : 00
+</div>
+</div>
+</div>
+<!--instructions-->
+<div class="rows container-fluid instructions" style="background:#eef7fa;border-radius:10px;padding:10px;">
+<b>Pentunjuk</b>
+<p id="marking" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">Marking scheme <span class="caret"></span></strong>
+<ul id="marklist">
+<li>Tiap Pertanyaan Bernilai 1</li>
+<li>Pertanyaan yang tidak dicoba atau tidak dikirim mendapatkan nilai 0</li>
+</ul>
+</p>
+<p id="general" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">General Instructions <span class="caret"></span></strong>
+<ul id="generallist">
+<li>Anda memiliki satu jam untuk menjawab semua pertanyaan</li>
+<li>Klik kirim untuk mengirimkan jawaban Anda dan batalkan untuk mengambil kembali kiriman Anda. Pertanyaan yang tidak diajukan tidak akan dipertimbangkan.</li>
+<li>Klik tandai untuk menandai pertanyaan dan hapus tanda untuk menghapusnya.</li>
+</ul>
+</p>
+<p id="gridinstruction" style="cursor:pointer;margin-top:20px;"><strong style="padding:2.4%;background:lightblue;border-radius:5px;">In the question grid <span class="caret"></span></strong>
+<ul id="gridlist">
+<li>Nomor pertanyaan saat ini adalah <kbd>digarisbawahi</kbd></li>
+<li>Pertanyaan yang dikunjungi muncul dalam warna <kbd>abu-abu</kbd></li>
+<li>Pertanyaan yang ditandai tampak <kbd>merah muda</kbd></li>
+<li>Pertanyaan yang dikirimkan muncul <kbd>hijau</kbd></li>
+<li>Pertanyaan yang dikirimkan dan yang ditandai akan muncul <kbd>biru</kbd></li>
+</ul>
+</div>
+
+
+<script>
+//for slide up and down instructions
+$(document).ready(function(){
+	$("#marking").mousedown(function(){
+		$("#marklist").slideToggle(1000);
+	});
+	$("#general").mousedown(function(){
+		$("#generallist").slideToggle(1000);
+	});
+	$("#gridinstruction").mousedown(function(){
+		$("#gridlist").slideToggle(1000);
+	});
+});
+</script>
+
+
+
+
+</div>
+<!--Questionare-->
+<div class="col-sm-6" id="questions">
+<div class="rows container-fluid" id="questionrow">
+<p class="question">Nomor_.Question
+<form class="form-horizontal">
+<div class="radio">
+<ul class="list-unstyled">
+<li><label><input type="radio" id="question" value="1" onchange="submission();">option1</input></label></li>
+<li><label><input type="radio" id="question" value="2" onchange="submission();">option2</input></label></li>
+<li><label><input type="radio"id="question" value="3" onchange="submission();">option3</input></label></li>
+<li><label><input type="radio" id="question" value="4" onchange="submission();">option4</input></label></li>
+</ul>
+</div>
+</form> 
+</p>
+</div>
+
+
+
+
+<!--pagers-->
+<div class="rows container-fluid pgrs">
+<ul class="pager" style="font-size:70%;">
+<li class="previous" id="prev"><a onclick="(counter>1)?valfunc(--counter):valfunc(counter);">Previous</a></li>
+<li class="next" id="next"><a onclick="(counter<=50)?valfunc(++counter):valfunc(counter);">Next</a></li>
+
+</ul>
+</div>
+<!--Option buttons-->
+<div class="rows container-fluid buttons" style="margin-bottom:0;">
+<div class="col-sm-3">
+<center>
+<button id="mark" type="button" class="btn btn-info" onclick="markpurple();">
+Mark
+</button>
+</center>
+</div>
+<div class="col-sm-3">
+<center>
+<button id="unmark" type="button" class="btn btn-info" onclick="unmark();">
+Unmark
+</button>
+</center>
+</div>
+<div class="col-sm-3">
+<center>
+<button id="undo" type="button" class="btn btn-warning" onclick="undo();">
+Undo
+</button>
+</center>
+</div>
+
+<div class="col-sm-3">
+<center><button id="submit" type="button" class="btn btn-success" onclick="submitgreen();">Submit</button></center>
+</div>
+
+
+</div>
+</div>
+<!--Question grid-->
+<div class="col-sm-3 question-grid" style="margin-bottom:0;">
+<table class="table table-bordered table-responsive">
+<tr>
+<td id="1" onclick="valfunc(1);">1</td>
+<td id="2" onclick="valfunc(2);">2</td>
+<td id="3" onclick="valfunc(3);">3</td>
+<td id="4" onclick="valfunc(4);">4</td>
+<td id="5" onclick="valfunc(5);">5</td>
+</tr>
+<tr>
+<td id="6" onclick="valfunc(6);">6</td>
+<td id="7" onclick="valfunc(7);">7</td>
+<td id="8" onclick="valfunc(8);">8</td>
+<td id="9" onclick="valfunc(9);">9</td>
+<td id="10" onclick="valfunc(10);">10</td>
+</tr>
+<tr>
+<td id="11" onclick="valfunc(11);">11</td>
+<td id="12" onclick="valfunc(12);">12</td>
+<td id="13" onclick="valfunc(13);">13</td>
+<td id="14" onclick="valfunc(14);">14</td>
+<td id="15" onclick="valfunc(15);">15</td>
+</tr>
+<tr>
+<td id="16" onclick="valfunc(16);">16</td>
+<td id="17" onclick="valfunc(17);">17</td>
+<td id="18" onclick="valfunc(18);">18</td>
+<td id="19" onclick="valfunc(19);">19</td>
+<td id="20" onclick="valfunc(20);">20</td>
+</tr>
+<tr>
+<td id="21" onclick="valfunc(21);">21</td>
+<td id="22" onclick="valfunc(22);">22</td>
+<td id="23" onclick="valfunc(23);">23</td>
+<td id="24" onclick="valfunc(24);">24</td>
+<td id="25" onclick="valfunc(25);">25</td>
+</tr>
+<tr>
+<td id="26" onclick="valfunc(26);">26</td>
+<td id="27" onclick="valfunc(27);">27</td>
+<td id="28" onclick="valfunc(28);">28</td>
+<td id="29" onclick="valfunc(29);">29</td>
+<td id="30" onclick="valfunc(30);">30</td>
+</tr>
+
+
+
+
+</table>
+
+</div>
+</div>
+<!--footer-->
+<div class="rows" style="background:lightblue;transform:skewX(20deg);min-height:60px;margin-left:10px;margin-right:10px;border-left:20px double white;border-right:20px double white;">
+<div class="foot" style="transform:skewX(-20deg);text-align:right;color:white;padding:10px;">
+*Read the instructions carefully before answering
+</div>
+</div>
+</body>
+
+
+<script type="text/javascript">
+	//counter variable
+var counter;
+//code for timer
+
+// Update the count down every 1 second
+var percentremain=0;
+var distance = 720000;
+var fixed=new Date().getTime();
+fixed+=distance;
+var x = setInterval(function() {
+
+  //Test time in milliseconds
+  distance=fixed-(new Date().getTime());
+  // Time calculations for days, hours, minutes and seconds
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML = "Time remaining:<br/>"+hours + " : "
+  + minutes + " : " + seconds+"</div></div>";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer").innerHTML = "EXPIRED";
+	counter=61;
+	submitgreen();
+  }
+}, 1000);
+
+//end of code for timer
+
+//code for counter;
+counter=1;
+var marked=[];
+var submitted=[];
+var visited=[];
+var tickedoption=[];
+var marksperquestion=[];
+var rightans;
+for(var i=0;i<30;i++)
+{
+	marked.push(0);
+	submitted.push(0);
+	visited.push(0);
+	tickedoption.push(0);
+	marksperquestion.push(0);
+}
+//changes the background color of marked question boxes in the grid
+function setVisited(num)
+{
+	if(!visited[num-1])
+	document.getElementById(""+num).style.backgroundColor="lightgray";
+	visited[num-1]=1;
+	for(var i=1;i<=30;i++)
+	{
+		document.getElementById(""+i).style.textDecoration="none";
+	}
+	document.getElementById(""+num).style.textDecoration="underline";
+}
+//valfunc: sets value of counter to the value that the user clicks on
+function valfunc(num)
+{
+	counter=num;
+	//enter your question here
+	var question="question";
+	//options
+	var option1="option1";
+	var option2="option2";
+	var option3="option3";
+	var option4="option4";
+
+	if(num>1)
+	{
+		document.getElementById("prev").style.display="inline";
+		if(num>50)
+		{
+			document.getElementById("next").style.display="none";
+		}
+		else
+		{
+			document.getElementById("next").style.display="inline";
+		}
+	}
+	switch(num)
+	{
+case 1:
+question = "Tentukan antonim kata berikut ini! <br><br>MUNGKIN   ><  .....<br><br>"
+image=""
+option1 ="(A). MUSKIL"
+option2 ="(B). JANGAN-JANGAN"
+option3 ="(C). TAMPAKNYA"
+option4 ="(D). POTENSIAL"
+rightans ="1"
+break;
+case 2:
+question = "Tentukan antonim kata berikut ini! <br><br>ADIK   ><  .....<br><br>"
+image=""
+option1 ="(A). YAYI"
+option2 ="(B). RAI"
+option3 ="(C). ABANG"
+option4 ="(D). MUDA"
+rightans ="3"
+break;
+case 3:
+question = "Tentukan antonim kata berikut ini! <br><br>MATI   ><  .....<br><br>"
+image=""
+option1 ="(A). HILANG"
+option2 ="(B). BERNYAWA"
+option3 ="(C). MENINGGAL"
+option4 ="(D). BINASA"
+rightans ="2"
+break;
+case 4:
+question = "Tentukan antonim kata berikut ini! <br><br>TERUS   ><  .....<br><br>"
+image=""
+option1 ="(A). BERHENTI"
+option2 ="(B). SELALU"
+option3 ="(C). TEMBUS"
+option4 ="(D). MENERUS"
+rightans ="1"
+break;
+case 5:
+question = "Tentukan antonim kata berikut ini! <br><br>BARU   ><  .....<br><br>"
+image=""
+option1 ="(A). LAMA"
+option2 ="(B). TERKINI"
+option3 ="(C). AWAL"
+option4 ="(D). SEDANG"
+rightans ="1"
+break;
+case 6:
+question = "Carilah kata yang sesuai untuk mengambarkan Sinonim tiga kata pada soal! <br><br>TAKUT-TAKUT / JANGAN-JANGAN / DAPAT<br><br>"
+image=""
+option1 ="(A). SEMAKSIMAL"
+option2 ="(B). BILA"
+option3 ="(C). SEDAPAT"
+option4 ="(D). MUNGKIN"
+rightans ="4"
+break;
+case 7:
+question = "Carilah kata yang sesuai untuk mengambarkan Sinonim tiga kata pada soal! <br><br>LAJUR / ARTIKEL / JALUR<br><br>"
+image=""
+option1 ="(A). BARIS"
+option2 ="(B). KROMATOGRAFI"
+option3 ="(C). KOLOM"
+option4 ="(D). RANGKAIAN"
+rightans ="3"
+break;
+case 8:
+question = "Carilah kata yang sesuai untuk mengambarkan Sinonim tiga kata pada soal! <br><br>RAI / MUDA / DIMAS<br><br>"
+image=""
+option1 ="(A). ABANG"
+option2 ="(B). SEIBU"
+option3 ="(C). ADIK"
+option4 ="(D). BUNGSU"
+rightans ="3"
+break;
+case 9:
+question = "Carilah kata yang sesuai untuk mengambarkan Sinonim tiga kata pada soal! <br><br>MAKSUD / KAUL / KALIMAT<br><br>"
+image=""
+option1 ="(A). MEMBALIKKAN"
+option2 ="(B). PERKATAAN"
+option3 ="(C). MENGENCONGKAN"
+option4 ="(D). TANDUK"
+rightans ="2"
+break;
+case 10:
+question = "Carilah kata yang sesuai untuk mengambarkan Sinonim tiga kata pada soal! <br><br>URUSAN / ACARA / HAL<br><br>"
+image=""
+option1 ="(A). MENGHENINGKAN"
+option2 ="(B). TUNGGAKAN"
+option3 ="(C). MENDAKIKAN"
+option4 ="(D). PERKARA"
+rightans ="4"
+break;
+case 11:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>POLITIK / SOSIAL / EKONOMI<br><br>"
+image=""
+option1 ="(A). P"
+option2 ="(B). U"
+option3 ="(C). O"
+option4 =""
+rightans ="1"
+break;
+case 12:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>PRESTASI / HARGA / BIAS<br><br>"
+image=""
+option1 ="(A). I"
+option2 ="(B). S"
+option3 ="(C). H"
+option4 =""
+rightans ="1"
+break;
+case 13:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>LEGAM / PEKAT / KUMBANG<br><br>"
+image=""
+option1 ="(A). J"
+option2 ="(B). H"
+option3 ="(C). B"
+option4 =""
+rightans ="2"
+break;
+case 14:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>TBESI / ARAB / TANBERSENJATA<br><br>"
+image=""
+option1 ="(A). A"
+option2 ="(B). U"
+option3 ="(C). K"
+option4 =""
+rightans ="1"
+break;
+case 15:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>JEMENPEMASARAN / SIKHAJI / JEMENKRISIS<br><br>"
+image=""
+option1 ="(A). I"
+option2 ="(B). P"
+option3 ="(C). M"
+option4 =""
+rightans ="3"
+break;
+case 16:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>HEWAN / ANAK / GIGI<br><br>"
+image=""
+option1 ="(A). T"
+option2 ="(B). D"
+option3 ="(C). Q"
+option4 =""
+rightans ="2"
+break;
+case 17:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>ARTIKULASI / PEMILIHAN / SWATANTRA<br><br>"
+image=""
+option1 ="(A). W"
+option2 ="(B). M"
+option3 ="(C). D"
+option4 =""
+rightans ="3"
+break;
+case 18:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>GIRAL / KERTAS / MUKA<br><br>"
+image=""
+option1 ="(A). U"
+option2 ="(B). R"
+option3 ="(C). S"
+option4 =""
+rightans ="1"
+break;
+case 19:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>IKAN / HATI / KAIL<br><br>"
+image=""
+option1 ="(A). M"
+option2 ="(B). B"
+option3 ="(C). G"
+option4 =""
+rightans ="1"
+break;
+case 20:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>ORGANIK / BANGUNAN / BAKU<br><br>"
+image=""
+option1 ="(A). G"
+option2 ="(B). Q"
+option3 ="(C). B"
+option4 =""
+rightans ="3"
+break;
+case 21:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>PISAH / TANGAN / HUBUNG<br><br>"
+image=""
+option1 ="(A). U"
+option2 ="(B). X"
+option3 ="(C). T"
+option4 =""
+rightans ="3"
+break;
+case 22:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>PUTIH / HITAM / BUMI<br><br>"
+image=""
+option1 ="(A). R"
+option2 ="(B). K"
+option3 ="(C). I"
+option4 =""
+rightans ="2"
+break;
+case 23:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>SUBTROPIS / TROPIS / BENUA<br><br>"
+image=""
+option1 ="(A). S"
+option2 ="(B). I"
+option3 ="(C). A"
+option4 =""
+rightans ="2"
+break;
+case 24:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>IKAN / DADAR / ASIN<br><br>"
+image=""
+option1 ="(A). H"
+option2 ="(B). Y"
+option3 ="(C). T"
+option4 =""
+rightans ="3"
+break;
+case 25:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>NDEKAT / NJAUH / NSENJA<br><br>"
+image=""
+option1 ="(A). J"
+option2 ="(B). O"
+option3 ="(C). R"
+option4 =""
+rightans ="3"
+break;
+case 26:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>RODI / PAKSA / SAMA<br><br>"
+image=""
+option1 ="(A). K"
+option2 ="(B). I"
+option3 ="(C). Z"
+option4 =""
+rightans ="1"
+break;
+case 27:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>WILAYAH / PUSAT / POLISI<br><br>"
+image=""
+option1 ="(A). K"
+option2 ="(B). J"
+option3 ="(C). Z"
+option4 =""
+rightans ="1"
+break;
+case 28:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>KERJA / LISTRIK / NUKLIR<br><br>"
+image=""
+option1 ="(A). G"
+option2 ="(B). E"
+option3 ="(C). T"
+option4 =""
+rightans ="3"
+break;
+case 29:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>UDARA / ANGKASA / TUNGGU<br><br>"
+image=""
+option1 ="(A). C"
+option2 ="(B). R"
+option3 ="(C). Q"
+option4 =""
+rightans ="2"
+break;
+case 30:
+question = "Carilah kata yang sesuai untuk mengambarkan Kata Majemuk atau Kata Semantik  <br> pada tiga kata pada soal! (Huruf awal dari Jawaban kata) <br><br>KRIM / PUTER / DOGER<br><br>"
+image=""
+option1 ="(A). B"
+option2 ="(B). E"
+option3 ="(C). Q"
+option4 =""
+rightans ="2"
+break;
+	}
+	if(num<=30)
+	{
+	document.getElementById("questionrow").innerHTML="Click \"submit\" to submit your answers and \"previous\" to go back";
+		$(document).ready(function()
+		{
+			$("#undo").prop('disabled',false);
+			$("#mark").prop('disabled',false);
+			$("#unmark").prop('disabled',false);
+		});	
+	
+	setVisited(num);	
+		
+	if(!tickedoption[num-1])
+	document.getElementById("questionrow").innerHTML="<p>Q"+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' value='4' name='question'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==1)
+	document.getElementById("questionrow").innerHTML="<p>Q"+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1' checked>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' value='4' name='question'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==2)
+	document.getElementById("questionrow").innerHTML="<p>Q"+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question' checked>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==3)
+	document.getElementById("questionrow").innerHTML="<p>Q"+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='3' checked>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==4)
+	document.getElementById("questionrow").innerHTML="<p>Q"+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='3'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4' checked>"+option4+"</input></label></li></div></form> </p>";
+	}
+	else
+	{
+		document.getElementById("questionrow").innerHTML="Click \"submit\" to submit your answers and \"previous\" to go back";
+		$(document).ready(function()
+		{
+			$("#undo").prop('disabled',true);
+			$("#mark").prop('disabled',true);
+			$("#unmark").prop('disabled',true);
+		});
+	}
+}
+function submission()
+{
+	var options=document.getElementsByName('question');
+	var ans=0;
+	for(var i=0;i<options.length;i++)
+	{
+		if(options[i].checked)
+		{
+			ans=options[i].value;
+			break;
+		}
+	}
+	tickedoption[counter-1]=parseInt(ans);
+}
+
+//when submit button is clicked
+function submitgreen()
+{
+	if(counter<=30)
+	{
+	if(tickedoption[counter-1]!=0)
+	{
+	submitted[counter-1]=1;
+	var clr="lightgreen";
+	if(marked[counter-1]==1)
+	{
+		clr="lightblue";
+	}
+	document.getElementById(""+counter).style.backgroundColor=clr;
+	if(tickedoption[counter-1]==rightans)
+	{
+		marksperquestion[counter-1]=1;
+	}
+	else
+	{
+		marksperquestion[counter-1]=0;
+	}
+	}
+	else
+	{
+		alert("Please select an option before submission");
+	}
+	}
+	else
+	{
+		//final submission code
+		var jawaban="1,3,2,1,1,4,3,3,2,4,1,1,2,1,3,2,3,1,1,3,3,2,2,3,3,1,1,3,2,2"
+		var sum=0;
+		var visi=0;
+		var correct=0;
+		var incorrect=0;
+		var unattempted=0;
+		for(var i=0;i<30;i++)
+		{
+			if(submitted[i])
+			{
+				sum+=marksperquestion[i];
+				if(marksperquestion[i]>0)
+				{
+					correct++;
+				}
+				else
+				{
+					incorrect++;
+				}
+			}
+			else
+			{
+				unattempted++;
+			}
+			if(visited[i])
+			{
+				visi++;
+			}
+		}
+		$(document).ready(function(){
+			$(".content").empty();
+			$(".foot").empty();
+			$(".content").html("<center><table style='width:50%' class='table table-responsive table-bordered'><tr class='success'><th>Jumlah Jawaban Benar</th><td>"+correct+"</td></tr><tr class='danger'><th>Jumlah Jawaban Salah</th><td>"+incorrect+"</td></tr><tr class='warning'><th>Jumlah Jawaban Tidak terjawab</th><td>"+unattempted+"</td></tr></table></center><center> Jawaban Anda : "+tickedoption+"</center><center> Jawaban Benar : "+jawaban+"</center>");
+
+		});
+	}
+}
+//when mark button is clicked
+
+
+function markpurple()
+{
+	marked[counter-1]=1;
+	var clr="pink";
+	if(submitted[counter-1])
+	{
+		clr="lightblue";
+	}
+	document.getElementById(""+counter).style.backgroundColor=clr;
+}
+//when unmark button is clicked
+function unmark()
+{
+	marked[counter-1]=0;
+	if(submitted[counter-1])
+	{
+		submitgreen(counter);
+	}
+	else
+	{
+		document.getElementById(""+counter).style.backgroundColor="lightgray";
+	}
+}
+//when undo button is clicked
+function undo()
+{
+	submitted[counter-1]=0;
+	tickedoption[counter-1]=0;
+	marksperquestion[counter-1]=0;
+	if(marked[counter-1])
+	{
+		document.getElementById(""+counter).style.backgroundColor="pink";
+	}
+	else
+	{
+		document.getElementById(""+counter).style.backgroundColor="lightgray";
+	}
+	var options=document.getElementsByName('question');
+	for(var i=0;i<options.length;i++)
+	{
+			options[i].checked=false;
+	}
+}
+
+
+
+	
+</script>
