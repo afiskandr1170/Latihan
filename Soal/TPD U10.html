@@ -1,0 +1,775 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+
+<head>
+<title></title>
+
+<style>
+	div, .container-fluid
+	{	border:0px solid black;}
+	.question-grid
+	{	padding-top:15px;}
+	#timer
+	{	font-family: 'Orbitron', sans-serif;	font-weight:900;	font-size:150%;}
+	button
+	{	margin:3px;}
+	#questions
+	{	padding:3%;	padding-top:0.5%;	font-weight:900;	font-size:150%;	vertical-align:middle;}
+	#questionrow
+	{	min-height:300px;}
+	.rows
+	{	margin:15px 0;}
+	td, th
+	{	cursor:pointer;	text-align:center;}
+	td:hover
+	{	background:black;	color:white;}
+	td:onclick
+	{	color:white;}
+	a
+	{	cursor:pointer;
+	}
+	button{	width:100px;}
+</style>
+
+</head>
+
+
+<body onload="valfunc(1);">
+
+<div class="rows upper-bar">
+<div style="background:#1e91fa;transform:skewX(20deg);min-height:60px;margin-left:10px;margin-right:10px;border-left:20px double white;border-right:20px double white;">
+<div style="transform:skewX(-20deg);">
+<!--upper bar with logo and menus-->
+<div class="container-fluid">
+<!--space for logo-->
+<div class="col-sm-3 logo">
+ 		<img src="logo1.png" alt="Exam - Belajar Yuk" style="max-width: 50%;height: auto;">
+</div>
+<!--menu bar-->
+<div class="col-sm-9 menu-upper">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!--Content-->
+<div class="rows content container-fluid" style="margin-bottom:0;padding:0;">
+<!--left column containing instructions and timer-->
+<div class="col-sm-2">
+<!--timer-->
+<div class="rows container-fluid" id="timer">
+Time remaining:<br/>
+<div class="progress" style="margin-top:3%;">
+<div class="progress-bar progress-bar-striped" id="#bar" style="width:100%;">
+1 : 00 : 00
+</div>
+</div>
+</div>
+<!--instructions-->
+<div class="rows container-fluid instructions" style="background:#eef7fa;border-radius:10px;padding:10px;">
+</div>
+
+
+<script>
+//for slide up and down instructions
+$(document).ready(function(){
+	$("#marking").mousedown(function(){
+		$("#marklist").slideToggle(1000);
+	});
+	$("#general").mousedown(function(){
+		$("#generallist").slideToggle(1000);
+	});
+	$("#gridinstruction").mousedown(function(){
+		$("#gridlist").slideToggle(1000);
+	});
+});
+</script>
+
+
+
+
+</div>
+<!--Questionare-->
+<div class="col-sm-8" id="questions">
+
+
+<table class="table table-bordered table-responsive">
+<tr>
+<td id="1" onclick="valfunc(1);">1</td>
+<td id="2" onclick="valfunc(2);">2</td>
+<td id="3" onclick="valfunc(3);">3</td>
+<td id="4" onclick="valfunc(4);">4</td>
+<td id="5" onclick="valfunc(5);">5</td>
+<td id="6" onclick="valfunc(6);">6</td>
+<td id="7" onclick="valfunc(7);">7</td>
+<td id="8" onclick="valfunc(8);">8</td>
+<td id="9" onclick="valfunc(9);">9</td>
+<td id="10" onclick="valfunc(10);">10</td>
+<td id="11" onclick="valfunc(11);">11</td>
+<td id="12" onclick="valfunc(12);">12</td>
+<td id="13" onclick="valfunc(13);">13</td>
+<td id="14" onclick="valfunc(14);">14</td>
+<td id="15" onclick="valfunc(15);">15</td>
+</tr>
+<tr>
+<td id="16" onclick="valfunc(16);">16</td>
+<td id="17" onclick="valfunc(17);">17</td>
+<td id="18" onclick="valfunc(18);">18</td>
+<td id="19" onclick="valfunc(19);">19</td>
+<td id="20" onclick="valfunc(20);">20</td>
+<td id="21" onclick="valfunc(21);">21</td>
+<td id="22" onclick="valfunc(22);">22</td>
+<td id="23" onclick="valfunc(23);">23</td>
+<td id="24" onclick="valfunc(24);">24</td>
+<td id="25" onclick="valfunc(25);">25</td>
+<td id="26" onclick="valfunc(26);">26</td>
+<td id="27" onclick="valfunc(27);">27</td>
+<td id="28" onclick="valfunc(28);">28</td>
+<td id="29" onclick="valfunc(29);">29</td>
+<td id="30" onclick="valfunc(30);">30</td>
+</tr>
+</table>
+<br>
+<br>
+
+
+<div class="rows container-fluid" id="questionrow">
+<p class="question">Nomor_.Question
+<form class="form-horizontal">
+<div class="radio">
+<ul class="list-unstyled">
+<li><label><input type="radio" id="question" value="1" onchange="submission();">option1</input></label></li>
+<li><label><input type="radio" id="question" value="2" onchange="submission();">option2</input></label></li>
+<li><label><input type="radio"id="question" value="3" onchange="submission();">option3</input></label></li>
+<li><label><input type="radio" id="question" value="4" onchange="submission();">option4</input></label></li>
+</ul>
+</div>
+</form> 
+</p>
+</div>
+
+
+
+
+<!--pagers-->
+<button class="previous" id="prev"><a onclick="(counter>1)?valfunc(--counter):valfunc(counter);">Back</a></button>
+<button class="next" id="next"><a onclick="(counter<=30)?valfunc(++counter):valfunc(counter);">Next</a></button>
+<div class="rows container-fluid buttons" style="margin-bottom:0;">
+
+<button id="submit" type="button" class="btn btn-success" onclick="submitgreen();">Submit</button>
+
+
+
+
+</div>
+</div>
+<!--Question grid-->
+<div class="col-sm-3 question-grid" style="margin-bottom:0;">
+
+
+</div>
+</div>
+<!--footer-->
+<div class="rows">
+	<div class="foot"></div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+	//counter variable
+var counter;
+//code for timer
+
+// Update the count down every 1 second
+var percentremain=0;
+var distance = 600000;
+var fixed=new Date().getTime();
+fixed+=distance;
+var x = setInterval(function() {
+
+  //Test time in milliseconds
+  distance=fixed-(new Date().getTime());
+  // Time calculations for days, hours, minutes and seconds
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML = "Time remaining:<br/>"+hours + " : "
+  + minutes + " : " + seconds+"</div></div>";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer").innerHTML = "EXPIRED";
+	counter=61;
+	submitgreen();
+  }
+}, 1000);
+
+//end of code for timer
+
+//code for counter;
+counter=1;
+var marked=[];
+var submitted=[];
+var visited=[];
+var tickedoption=[];
+var marksperquestion=[];
+var rightans;
+for(var i=0;i<30;i++)
+{
+	marked.push(0);
+	submitted.push(0);
+	visited.push(0);
+	tickedoption.push(0);
+	marksperquestion.push(0);
+}
+//changes the background color of marked question boxes in the grid
+function setVisited(num)
+{
+	if(!visited[num-1])
+	document.getElementById(""+num).style.backgroundColor="lightgray";
+	visited[num-1]=1;
+	for(var i=1;i<=30;i++)
+	{
+		document.getElementById(""+i).style.textDecoration="none";
+	}
+	document.getElementById(""+num).style.textDecoration="underline";
+}
+
+const ls_date = [];
+const date = new Date();
+ls_date.push(date);
+
+
+
+//valfunc: sets value of counter to the value that the user clicks on
+function valfunc(num)
+{
+	ls_date.push(new Date());
+	counter=num;
+	//enter your question here
+	var question="question";
+	//options
+	var option1="option1";
+	var option2="option2";
+	var option3="option3";
+	var option4="option4";
+
+	if(num>1)
+	{
+		document.getElementById("prev").style.display="inline";
+		if(num>50)
+		{
+			document.getElementById("next").style.display="none";
+		}
+		else
+		{
+			document.getElementById("next").style.display="inline";
+		}
+	}
+	switch(num)
+	{
+
+case 1:
+question = "Pilihlah kata yang paling tepat sehingga terdapat idiom yang sesuai dengan kata selanjutnya <br> <br>BENCANA (.......) NABATI<br> <br>"
+image=""
+option1 ="(A). MALAKUT"
+option2 ="(B). ALAM"
+option3 ="(C). SEMESTA"
+option4 ="(D). NABATI"
+rightans ="2"
+break;
+case 2:
+question = "Pilihlah kata yang paling tepat sehingga terdapat idiom yang sesuai dengan kata selanjutnya <br> <br>BANTING (.......) PERDANA<br> <br>"
+image=""
+option1 ="(A). PERDANA"
+option2 ="(B). TUNAI"
+option3 ="(C). ECERAN"
+option4 ="(D). HARGA"
+rightans ="4"
+break;
+case 3:
+question = "Pilihlah kata yang paling tepat sehingga terdapat idiom yang sesuai dengan kata selanjutnya <br> <br>ASAM (.......) EPSOM<br> <br>"
+image=""
+option1 ="(A). DAPUR"
+option2 ="(B). GLAUBER"
+option3 ="(C). GARAM"
+option4 ="(D). EPSOM"
+rightans ="3"
+break;
+case 4:
+question = "Pilihlah kata yang paling tepat sehingga terdapat idiom yang sesuai dengan kata selanjutnya <br> <br>ALIH (.......) KUNO<br> <br>"
+image=""
+option1 ="(A). BAHASA"
+option2 ="(B). KODE"
+option3 ="(C). KUNO"
+option4 ="(D). KERABAT"
+rightans ="1"
+break;
+case 5:
+question = "<br> <br>BICARA ( CIBLOP ) POLISI<br>WAHANA ( ..... ) STATUS<br><br>"
+image=""
+option1 ="(A). SHATWA"
+option2 ="(B). WTAAHS"
+option3 ="(C). HWAATS"
+option4 ="(D). HAWATS"
+rightans ="4"
+break;
+case 6:
+question = "<br> <br>TEMPAT ( TEMUAN ) TUJUAN<br>DATANG ( ..... ) TAMPAK<br><br>"
+image=""
+option1 ="(A). DATPAK"
+option2 ="(B). KDTPAA"
+option3 ="(C). AATKDP"
+option4 ="(D). TDPKAA"
+rightans ="1"
+break;
+case 7:
+question = "<br> <br>SELATAN ( ATANAT ) STANDAR<br>PATROLI ( ..... ) JONGGOL<br><br>"
+image=""
+option1 ="(A). LORGNO"
+option2 ="(B). OOGRLN"
+option3 ="(C). GOLNRO"
+option4 ="(D). OLRGNO"
+rightans ="1"
+break;
+case 8:
+question = "<br> <br>PULANG ( ANART ) ARTERI<br>GANJAR ( ..... ) UNGKAP<br><br>"
+image=""
+option1 ="(A). JANUG"
+option2 ="(B). AGUNJ"
+option3 ="(C). AGJUN"
+option4 ="(D). JAUNG"
+rightans ="4"
+break;
+case 9:
+question = "<br> <br>KONVOI ( KONHAB ) BAHASA<br>PUNCAK ( ..... ) IKUTAN<br><br>"
+image=""
+option1 ="(A). UPNUIK"
+option2 ="(B). INPKUU"
+option3 ="(C). PUNUKI"
+option4 ="(D). PIKUUN"
+rightans ="3"
+break;
+case 10:
+question = "<br> <br>TURUN ( UNNU ) SUSUN<br>KABAR ( ..... ) TAMAN<br><br>"
+image=""
+option1 ="(A). RAAN"
+option2 ="(B). ANAR"
+option3 ="(C). ARNA"
+option4 ="(D). ARNA"
+rightans ="3"
+break;
+case 11:
+question = "<br> <br>PELUANG ( ULEPLAPO ) LAPORAN<br>PROGRAM ( ..... ) PEMILIK<br><br>"
+image=""
+option1 ="(A). GORPPEMI"
+option2 ="(B). IRGMPEPO"
+option3 ="(C). OGPRMIPE"
+option4 ="(D). GIRPEMOP"
+rightans ="1"
+break;
+case 12:
+question = "<br> <br>RUPIAH ( IAHMET ) SISTEM<br>SINDUR ( ..... ) ENERGI<br><br>"
+image=""
+option1 ="(A). URIRGD"
+option2 ="(B). URGRDI"
+option3 ="(C). DURIGR"
+option4 ="(D). RIUGRD"
+rightans ="3"
+break;
+case 13:
+question = "<br> <br>BEBER ( REUM ) MUDIK<br>IMBAS ( ..... ) TEWAS<br><br>"
+image=""
+option1 ="(A). SAET"
+option2 ="(B). ETAS"
+option3 ="(C). TASE"
+option4 ="(D). SEAT"
+rightans ="1"
+break;
+case 14:
+question = "<br> <br>RANGKA ( AKGWAC ) WACANA<br>ATENSI ( ..... ) MENUJU<br><br>"
+image=""
+option1 ="(A). NMSINE"
+option2 ="(B). ISNMEN"
+option3 ="(C). ENNMIS"
+option4 ="(D). NNEIMS"
+rightans ="2"
+break;
+case 15:
+question = "<br> <br>REKAM ( AMED ) DEPAN<br>TENDA ( ..... ) ANCOL<br><br>"
+image=""
+option1 ="(A). ADNA"
+option2 ="(B). ANDA"
+option3 ="(C). ADAN"
+option4 ="(D). DANA"
+rightans ="4"
+break;
+case 16:
+question = "<br> <br>KETUA ( EKET ) TERUS<br>TAHUN ( ..... ) BAKUL<br><br>"
+image=""
+option1 ="(A). AATB"
+option2 ="(B). TABA"
+option3 ="(C). ATAB"
+option4 ="(D). BTAA"
+rightans ="3"
+break;
+case 17:
+question = "<br> <br>MERANTI ( NAINA ) PEMINAT<br>SEJALAN ( ..... ) SUASANA<br><br>"
+image=""
+option1 ="(A). ALSAN"
+option2 ="(B). LASAN"
+option3 ="(C). ANLSA"
+option4 ="(D). ALASN"
+rightans ="2"
+break;
+case 18:
+question = "<br> <br>LAYANAN ( ANALIS ) KOALISI<br>KEADAAN ( ..... ) HUKUMAN<br><br>"
+image=""
+option1 ="(A). DAMAUA"
+option2 ="(B). AADUMA"
+option3 ="(C). UDAAMA"
+option4 ="(D). UAAAMD"
+rightans ="2"
+break;
+case 19:
+question = "<br> <br>SAHABAT ( ABAAWAK ) KAWASAN<br>TANJUNG ( ..... ) ANGGOTA<br><br>"
+image=""
+option1 ="(A). NANGGUJ"
+option2 ="(B). JUNGGNA"
+option3 ="(C). NAJGGNU"
+option4 ="(D). GAUGNJN"
+rightans ="2"
+break;
+case 20:
+question = "<br> <br>RAMADAN ( AMABAND ) BANDUNG<br>SEBELAH ( ..... ) TSUNAMI<br><br>"
+image=""
+option1 ="(A). EESNTUB"
+option2 ="(B). ESTEBNU"
+option3 ="(C). BSEEUNT"
+option4 ="(D). EBETSUN"
+rightans ="4"
+break;
+case 21:
+question = "<br> <br>KAMPUNG ( PMAKEBO ) OKTOBER<br>PENEGAK ( ..... ) PEGAWAI<br><br>"
+image=""
+option1 ="(A). EAAPWEN"
+option2 ="(B). ENEPAWA"
+option3 ="(C). APAWNEE"
+option4 ="(D). EWAANPE"
+rightans ="2"
+break;
+case 22:
+question = "<br> <br>HARKAT ( RAHAD ) BERADA<br>KRITIK ( ..... ) NEGERI<br><br>"
+image=""
+option1 ="(A). ERRKI"
+option2 ="(B). REIKR"
+option3 ="(C). RERKI"
+option4 ="(D). IRKER"
+rightans ="4"
+break;
+case 23:
+question = "<br> <br>BILAS ( ASAJ ) JALAN<br>ORGAN ( ..... ) SANTA<br><br>"
+image=""
+option1 ="(A). ANAS"
+option2 ="(B). SAAN"
+option3 ="(C). ANSA"
+option4 ="(D). NSAA"
+rightans ="1"
+break;
+case 24:
+question = "<br> <br>SEPEDA ( EDANAR ) SIARAN<br>WANITA ( ..... ) ASRAMA<br><br>"
+image=""
+option1 ="(A). AMAAIT"
+option2 ="(B). MATIAA"
+option3 ="(C). ITAAMA"
+option4 ="(D). AMAIAT"
+rightans ="3"
+break;
+case 25:
+question = "<br> <br>PELAKU ( KASER ) RESUME<br>DOKTER ( ..... ) KONTUR<br><br>"
+image=""
+option1 ="(A). NEKTO"
+option2 ="(B). ETNOK"
+option3 ="(C). EONTK"
+option4 ="(D). TKNEO"
+rightans ="2"
+break;
+case 26:
+question = "<br> <br>ANCAMAN ( AMAPO ) RESPONS<br>BELOKAN ( ..... ) ALQURAN<br><br>"
+image=""
+option1 ="(A). KAURO"
+option2 ="(B). OKAUR"
+option3 ="(C). KOARU"
+option4 ="(D). RKAOU"
+rightans ="2"
+break;
+case 27:
+question = "<br> <br>PUKUL ( PUYA ) UPAYA<br>SOSOK ( ..... ) BAPAK<br><br>"
+image=""
+option1 ="(A). SAOK"
+option2 ="(B). KOSA"
+option3 ="(C). AKOS"
+option4 ="(D). SOAK"
+rightans ="4"
+break;
+case 28:
+question = "<br> <br>SEMPAT ( SEMUAI ) MENUAI<br>TERASA ( ..... ) PALING<br><br>"
+image=""
+option1 ="(A). ETNIRG"
+option2 ="(B). TREGIN"
+option3 ="(C). TERING"
+option4 ="(D). RNTEIG"
+rightans ="3"
+break;
+case 29:
+question = "<br> <br>BAWAH ( HAYA ) BIAYA<br>UDARA ( ..... ) MOTOR<br><br>"
+image=""
+option1 ="(A). AROR"
+option2 ="(B). ORAR"
+option3 ="(C). RROA"
+option4 ="(D). AORR"
+rightans ="1"
+break;
+case 30:
+question = "<br> <br>DAFTAR ( DAFGET ) TARGET<br>PARKIR ( ..... ) MEMUJI<br><br>"
+image=""
+option1 ="(A). RIPAUJ"
+option2 ="(B). APRUJI"
+option3 ="(C). RUJPIA"
+option4 ="(D). PARUJI"
+rightans ="4"
+break;
+
+
+
+	}
+	if(num<=30)
+	{
+	document.getElementById("questionrow").innerHTML="Click \"submit\" to submit your answers and \"previous\" to go back";
+		$(document).ready(function()
+		{
+			$("#undo").prop('disabled',false);
+			$("#mark").prop('disabled',false);
+			$("#unmark").prop('disabled',false);
+		});	
+	
+	setVisited(num);	
+		
+	if(!tickedoption[num-1])
+	document.getElementById("questionrow").innerHTML="<p>No "+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' value='4' name='question'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==1)
+	document.getElementById("questionrow").innerHTML="<p>No "+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1' checked>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' value='4' name='question'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==2)
+	document.getElementById("questionrow").innerHTML="<p>No "+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question' checked>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' value='3' name='question'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==3)
+	document.getElementById("questionrow").innerHTML="<p>No "+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='3' checked>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4'>"+option4+"</input></label></li></div></form> </p>";
+	else if(tickedoption[num-1]==4)
+	document.getElementById("questionrow").innerHTML="<p>No "+num+". "+question+"</br><img src="+image+"><form class='form-horizontal'><div class='radio'><ul class='list-unstyled'><li><label><input onchange='submission();' type='radio' name='question' value='1'>"+option1+"</input></label></li><li><label><input onchange='submission();' value='2' type='radio' name='question'>"+option2+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='3'>"+option3+"</input></label></li><li><label><input onchange='submission();' type='radio' name='question' value='4' checked>"+option4+"</input></label></li></div></form> </p>";
+	}
+	else
+	{
+		document.getElementById("questionrow").innerHTML="Click \"submit\" to submit your answers and \"previous\" to go back";
+		$(document).ready(function()
+		{
+			$("#undo").prop('disabled',true);
+			$("#mark").prop('disabled',true);
+			$("#unmark").prop('disabled',true);
+		});
+	}
+}
+function submission()
+{
+	var options=document.getElementsByName('question');
+	var ans=0;
+	for(var i=0;i<options.length;i++)
+	{
+		if(options[i].checked)
+		{
+			ans=options[i].value;
+			break;
+		}
+	}
+	tickedoption[counter-1]=parseInt(ans);
+}
+
+
+
+//when submit button is clicked
+function submitgreen()
+{
+	if(counter<=30)
+	{
+	if(tickedoption[counter-1]!=0)
+	{
+	submitted[counter-1]=1;
+	var clr="lightgreen";
+	if(marked[counter-1]==1)
+	{
+		clr="lightblue";
+	}
+	document.getElementById(""+counter).style.backgroundColor=clr;
+	if(tickedoption[counter-1]==rightans)
+	{
+		marksperquestion[counter-1]=1;
+	}
+	else
+	{
+		marksperquestion[counter-1]=0;
+	}
+	}
+	else
+	{
+		alert("Please select an option before submission");
+	}
+	}
+	else
+	{
+		//final submission code
+		var jawaban="2,4,3,1,4,1,1,4,3,3,1,3,1,2,4,3,2,2,2,4,2,4,1,3,2,2,4,3,1,4"
+		var sum=0;
+		var visi=0;
+		var correct=0;
+		var incorrect=0;
+		var unattempted=0;
+		for(var i=0;i<30;i++)
+		{
+			if(submitted[i])
+			{
+				sum+=marksperquestion[i];
+				if(marksperquestion[i]>0)
+				{
+					correct++;
+				}
+				else
+				{
+					incorrect++;
+				}
+			}
+			else
+			{
+				unattempted++;
+			}
+			if(visited[i])
+			{
+				visi++;
+			}
+
+		}
+
+
+
+		var jawaban1 = jawaban.toString();
+		var answer1 = tickedoption.toString();
+
+		var ls_jawaban = jawaban1.split(",");
+		var ls_answer = answer1.split(",");
+
+		var hasil=0;
+
+		for(i = 0 ; i < ls_answer.length ; i++)
+		{
+		   if( ls_answer[i] == ls_jawaban[i])
+		    {
+		    	hasil++;
+		     }
+		}
+
+		var ls_waktu=[]
+
+		for(i = 1 ; i <= ls_date.length ; i++)
+		{
+			ls_waktu.push((ls_date[i+1]-ls_date[i])/1000);
+		}
+
+
+		var no = [1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+
+
+		var maxLen = 30;
+
+		var tableHtml = '<tr><th>No</th><th>Jawaban Anda</th><th>Jawaban Benar</th><th>Waktu (detik)</th></tr>'
+
+		for (var i = 0; i < maxLen; i++) {
+		    tableHtml = tableHtml + '<tr>';
+		    tableHtml = tableHtml + '<td>' + (i >= no.length ? '' : no[i]) + '</td>';
+		    tableHtml = tableHtml + '<td>' + (i >= ls_answer.length ? '' : ls_answer[i]) + '</td>';
+		    tableHtml = tableHtml + '<td>' + (i >= ls_jawaban.length ? '' : ls_jawaban[i]) + '</td>';
+		    tableHtml = tableHtml + '<td>' + (i >= ls_waktu.length ? '' : ls_waktu[i]) + '</td>';
+		    tableHtml = tableHtml + '</tr>';
+		}
+
+
+
+		var salah=30-hasil
+		$(document).ready(function(){
+			$(".content").empty();
+			$(".foot").empty();
+			$(".content").html("<center><table style='width:50%' class='table table-responsive table-bordered'><tr class='success'><th>Jumlah Jawaban Benar</th><td>"+hasil+"</td></tr><tr class='danger'><th>Jumlah Jawaban Salah</th><td>"+salah+"</td></tr><tr class='warning'><th>Jumlah Jawaban terjawab</th><td>"+visi+"</td></tr></table></center><center> Jawaban Anda : "+tickedoption+"</center><center> Jawaban Benar : "+jawaban+"</center>");
+			$('.foot').html("<center><table style='width:50%' class='table table-responsive table-bordered'>"+tableHtml+"</table></center>");
+
+		});
+	}
+}
+
+
+
+
+function markpurple()
+{
+	marked[counter-1]=1;
+	var clr="pink";
+	if(submitted[counter-1])
+	{
+		clr="lightblue";
+	}
+	document.getElementById(""+counter).style.backgroundColor=clr;
+}
+//when unmark button is clicked
+function unmark()
+{
+	marked[counter-1]=0;
+	if(submitted[counter-1])
+	{
+		submitgreen(counter);
+	}
+	else
+	{
+		document.getElementById(""+counter).style.backgroundColor="lightgray";
+	}
+}
+//when undo button is clicked
+function undo()
+{
+	submitted[counter-1]=0;
+	tickedoption[counter-1]=0;
+	marksperquestion[counter-1]=0;
+	if(marked[counter-1])
+	{
+		document.getElementById(""+counter).style.backgroundColor="pink";
+	}
+	else
+	{
+		document.getElementById(""+counter).style.backgroundColor="lightgray";
+	}
+	var options=document.getElementsByName('question');
+	for(var i=0;i<options.length;i++)
+	{
+			options[i].checked=false;
+	}
+}
+
+
+
+	
+</script>
