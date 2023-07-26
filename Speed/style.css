@@ -1,0 +1,56 @@
+html,
+body {
+    /* give height 100% to all tags from html to .hero */
+    height: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+
+}
+
+.center {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: table;
+    opacity: 10;
+}
+
+.content-wrap {
+    display: table-cell;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    background: rgba(255,255,255);
+    z-index: 999;
+    position: fixed;
+}
+	
+
+.article-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article {
+  flex: 0 0 50%;
+  padding: 10px;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+
